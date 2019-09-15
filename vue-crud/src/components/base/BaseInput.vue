@@ -3,9 +3,11 @@
     <span class="base-input__label"> {{ label }} </span>
     <component
       :is="tag || 'input'"
+      :ref="`${name}`"
       :type="type"
       :value="value"
       @change="onInput"
+      @input="onInput"
       @focus="onFocus = true"
       @blur="onFocus = false"
       class="base-input__item"
@@ -36,6 +38,11 @@ export default {
       onFocus: false
     }
   },
+
+  mounted () {
+    if (this.value) this.$refs[this.name].value = this.value
+  },
+
   methods: {
     onInput ({ target }) {
       this.$emit('clearError', this.name)
@@ -59,6 +66,7 @@ export default {
       border: 0;
       border-bottom: 1px solid $c-black;
       display: block;
+      font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
     }
 
     &__label {

@@ -1,7 +1,8 @@
 <template>
   <component
     :is="createComponent"
-    :to="href"
+    :to="isDisabled ? '#' : href"
+    :disabled="isDisabled"
     :class="['base-btn',{
       'base-btn--disabled': isDisabled,
       'base-btn--warning': isWarning,
@@ -43,6 +44,8 @@ export default {
 
 <style scoped lang="scss">
   .base-btn {
+    font-size: 14px;
+    margin: 0 10px;
     padding: 10px 30px;
     border: 0;
     border-radius: 3px;

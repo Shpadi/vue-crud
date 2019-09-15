@@ -12,7 +12,8 @@
     </template>
 
     <div class="base-form__button">
-      <BaseBtn label="Send" />
+      <BaseBtn :label="buttonLabel" />
+      <BaseBtn label="Cancel" href="/"/>
     </div>
   </form>
 </template>
@@ -24,7 +25,10 @@ export default {
   name: 'BaseForm',
   props: {
     fields: Array,
-    buttonLabel: String
+    buttonLabel: {
+      type: String,
+      default: 'Create'
+    }
   },
 
   data () {
@@ -32,10 +36,10 @@ export default {
     const errors = {}
     this.fields.forEach(field => {
       if (field.type === 'checkbox') {
-        formData[field.name] = 0
+        formData[field.name] = field.value || 0
         errors[field.name] = 0
       } else {
-        formData[field.name] = ''
+        formData[field.name] = field.value || ''
         errors[field.name] = null
       }
     })
@@ -46,7 +50,7 @@ export default {
   },
 
   computed: {
-    ...mapState('create', ['formErrors'])
+    ...mapState('crud', ['formErrors'])
   },
 
   watch: {
@@ -82,6 +86,9 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+    .base-form {
+      max-width: 500px;
+      margin: 50px auto;
+    }
 </style>

@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'Create',
@@ -30,31 +30,32 @@ export default {
         {
           type: 'checkbox',
           name: 'canEdit',
-          label: 'I can`t edit this product'
+          label: 'I can edit this product (choose for editing in future)'
         }
       ]
     }
   },
 
+  computed: {
+    ...mapState('crud', ['productItems'])
+  },
+
   methods: {
     ...mapActions({
-      createProduct: 'create/createProduct'
+      createProduct: 'crud/createProduct'
     }),
     submit (data) {
       const payload = {
         data,
-        onSuccess: this.writeToStorage
+        onSuccess: this.goHome
       }
+      if (this.productItems.length) data.id = this.productItems[this.productItems.length - 1].id + 1
+      else data.id = 0
       this.createProduct(payload)
     },
-    writeToStorage (data) {
-      let server = localStorage.getItem('items')
-      if (server) {
-        server = JSON.parse(server)
-        server.push(data)
-        return localStorage.setItem('items', JSON.stringify(server))
-      }
-      return localStorage.setItem('items', JSON.stringify([ data ]))
+
+    goHome () {
+      this.$router.push('/')
     }
   }
 }

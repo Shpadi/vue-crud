@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import create from './module/create'
+import crud from './module/crud'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   modules: {
-    create
+    crud
   }
 })

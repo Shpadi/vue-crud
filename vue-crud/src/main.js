@@ -5,6 +5,9 @@ import store from '../store/index'
 import './registerServiceWorker'
 import upperFirst from 'lodash/upperFirst'
 import camelCase from 'lodash/camelCase'
+import VModal from 'vue-js-modal'
+
+Vue.use(VModal, { dialog: true })
 
 const requireComponent = require.context(
   './components/base',
